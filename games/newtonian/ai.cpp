@@ -9,8 +9,6 @@
 // <<-- /Creer-Merge: includes -->>
 #include <iostream>
 
-using namespace std;
-
 namespace cpp_client
 {
 
@@ -70,12 +68,13 @@ bool AI::run_turn()
 {
   for (unsigned int unitNum = 0; unitNum < player->units.size(); unitNum++)
   {
-    cout << player->units[unitNum]->job->title;
+    std::cout << player->units[unitNum]->job->title << std::endl;
   }
-    // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    // Put your game logic here for run_turn here
-    // <<-- /Creer-Merge: runTurn -->>
-    return true;
+  // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+  // Put your game logic here for run_turn here
+  // <<-- /Creer-Merge: runTurn -->>
+  std::cout << std::endl;
+  return true;
 }
 
 /// A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
