@@ -68,23 +68,10 @@ void AI::ended(bool won, const std::string& reason)
 /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
 bool AI::run_turn()
 {
-  cout << player->units.at(0)->job->title << endl;
-  /*
   for (int unitNum = 0; unitNum < player->units->size(); unitNum++)
   {
-    switch (player.units[unitNum]->job->title)
-    {
-      case "intern":
-        break;
-      case "manager":
-        break;
-      case "physicist":
-        break;
-      default:
-          
-     }
-   }
-   */
+    cout << player->units[unitNum]->job->title;
+  }
     // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // Put your game logic here for run_turn here
     // <<-- /Creer-Merge: runTurn -->>
