@@ -1,0 +1,16 @@
+var annotated =
+[
+    [ "cpp_client", null, [
+      [ "anarchy", "namespacecpp__client_1_1anarchy.html", "namespacecpp__client_1_1anarchy" ],
+      [ "catastrophe", "namespacecpp__client_1_1catastrophe.html", "namespacecpp__client_1_1catastrophe" ],
+      [ "checkers", "namespacecpp__client_1_1checkers.html", "namespacecpp__client_1_1checkers" ],
+      [ "chess", "namespacecpp__client_1_1chess.html", "namespacecpp__client_1_1chess" ],
+      [ "newtonian", "namespacecpp__client_1_1newtonian.html", "namespacecpp__client_1_1newtonian" ],
+      [ "pirates", "namespacecpp__client_1_1pirates.html", "namespacecpp__client_1_1pirates" ],
+      [ "saloon", "namespacecpp__client_1_1saloon.html", "namespacecpp__client_1_1saloon" ],
+      [ "spiders", "namespacecpp__client_1_1spiders.html", "namespacecpp__client_1_1spiders" ],
+      [ "stumped", "namespacecpp__client_1_1stumped.html", "namespacecpp__client_1_1stumped" ],
+      [ "Base_ai", "classcpp__client_1_1Base__ai.html", "classcpp__client_1_1Base__ai" ],
+      [ "Base_object", "classcpp__client_1_1Base__object.html", "classcpp__client_1_1Base__object" ]
+    ] ]
+];
