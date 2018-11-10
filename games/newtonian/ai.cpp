@@ -68,7 +68,7 @@ void AI::ended(bool won, const std::string& reason)
 /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
 bool AI::run_turn()
 {
-  for (int unitNum = 0; unitNum < player->units->size(); unitNum++)
+  for (unsigned int unitNum = 0; unitNum < player->units.size(); unitNum++)
   {
     cout << player->units[unitNum]->job->title;
   }
