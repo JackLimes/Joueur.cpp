@@ -7,6 +7,9 @@
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // You can add #includes here for your AI.
 // <<-- /Creer-Merge: includes -->>
+#include <iostream>
+
+using namespace std;
 
 namespace cpp_client
 {
@@ -65,18 +68,23 @@ void AI::ended(bool won, const std::string& reason)
 /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
 bool AI::run_turn()
 {
-    for (int unitNum = 0; unitNum < units.size(); unitNum++){
-      switch (units[unitNum].job.title){
-        case "intern":
-          break;
-        case "manager":
-          break;
-        case "physicist":
-          break;
-        default:
+  cout << player->units.at(0)->job->title << endl;
+  /*
+  for (int unitNum = 0; unitNum < player->units->size(); unitNum++)
+  {
+    switch (player.units[unitNum]->job->title)
+    {
+      case "intern":
+        break;
+      case "manager":
+        break;
+      case "physicist":
+        break;
+      default:
           
-      }
-    }
+     }
+   }
+   */
     // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // Put your game logic here for run_turn here
     // <<-- /Creer-Merge: runTurn -->>
