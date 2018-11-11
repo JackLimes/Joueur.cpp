@@ -83,6 +83,9 @@ public:
 /// <return>A List of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal. Or an empty list if no path found.</return>
 std::vector<Tile> find_path(const Tile& start, const Tile& goal);
 
+void physThinkBlue(const Unit& physicist);
+void snatch_blue_ore(const Unit& unit);
+
 
 
     // ####################

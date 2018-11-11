@@ -67,11 +67,25 @@ void AI::ended(bool won, const std::string& reason)
 bool AI::run_turn()
 {
   std::cout << "Turn: " << game->current_turn << std::endl;
+  std::cout << "0" << std::endl;
   for (unsigned int unitNum = 0; unitNum < player->units.size(); unitNum++)
   {
-    std::cout << player->units[unitNum]->job->title << std::endl;
-    //move the unit right
-    player->units[unitNum]->move(player->units[unitNum]->tile->tile_east);
+    std::cout << "1" << std::endl;
+    
+    if(player->units[unitNum]->job->title == "physicist")
+    {
+      std::cout << "2" << std::endl;
+      //std::vector<Tile> path = find_path(player->units[unitNum]->tile, game->get_tile_at(3,7));
+      //std::cout << "Size:" << path.size() << std::endl;
+      //std::cout << "Nav: " << game->get_tile_at(3,7)->is_pathable() << std::endl;
+      //player->units[unitNum]->move(path[0]);
+      physThinkBlue(player->units[unitNum]);
+    }
+    
+    if(player->units[unitNum]->job->title == "intern")
+    {
+      snatch_blue_ore(player->units[unitNum]);
+    }
   }
   // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
   // Put your game logic here for run_turn here
@@ -162,6 +176,68 @@ std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
 //<<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // You can add additional methods here for your AI to call
 //<<-- /Creer-Merge: methods -->>
+void AI::physThinkBlue(const Unit& physicist)
+{
+/*
+ std::cout << "3" << std::endl;
+  //get to the nearest blue oar.
+  std::vector<Tile> shortestPath;
+  bool ignore_start = true; // since start with empty vector, don't want that to be the shortest path
+  for(unsigned i = 0; i < game->tiles.size(); i++)
+  {
+    if (game->tiles[i]->blueium_ore > 0)
+    {
+      std::cout << "I probably got here!" << std::endl;
+      std::vector<Tile> adjacent = game->tiles[i]->get_neighbors();
+      for(unsigned j = 0; j < adjacent.size(); j++)
+      {
+        if(adjacent[j]->is_pathable())
+        {
+          shortestPath = find_path(physicist->tile, adjacent[j]);
+          break;
+        }
+      }
+    }
+  }
+  std::cout << "4" << std::endl;
+  //std::cout << shortestPath[0]->x << ":" << shortestPath[0]->y << std::endl;
+  if(shortestPath.size() > 0)
+  { 
+    std::cout << "I moved!" << std::endl;
+    physicist->move(shortestPath[0]);
+  }
+*/
+
+  std::vector<Tile> path = find_path(physicist->tile, physicist->tile->tile_south->tile_east);
+  std::cout << "path_size: " << path.size() << std::endl;
+  if(path.size() > 0) 
+  {
+    physicist->move(path[0]);
+  }
+}
+
+void AI::snatch_blue_ore(const Unit& unit)
+{
+  std::cout << "phy" << std::endl;
+  std::vector<Tile> path;
+  for(unsigned i = 0; i < game->tiles.size(); i++)
+  {
+    if(game->tiles[i]->blueium_ore > 0)
+    {
+      std::cout << "found blue at: " << game->tiles[i]->x << ", " << game->tiles[i]->y << std::endl;
+      path = find_path(unit->tile, game->get_tile_at(25,5));
+      std::cout << "path_size: " << path.size() << std::endl;
+      break;
+    }
+  }
+  if(path.size() > 0)
+  {
+    std::cout << "I'm moving to blue!" << std::endl;
+    unit->move(path[0]);
+  }
+    
+  return;
+}
 
 } // newtonian
 
