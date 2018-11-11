@@ -67,25 +67,20 @@ void AI::ended(bool won, const std::string& reason)
 bool AI::run_turn()
 {
   std::cout << "Turn: " << game->current_turn << std::endl;
-  std::cout << "0" << std::endl;
   for (unsigned int unitNum = 0; unitNum < player->units.size(); unitNum++)
   {
-    std::cout << "1" << std::endl;
-    
     if(player->units[unitNum]->job->title == "physicist")
     {
-      std::cout << "2" << std::endl;
-      //std::vector<Tile> path = find_path(player->units[unitNum]->tile, game->get_tile_at(3,7));
-      //std::cout << "Size:" << path.size() << std::endl;
-      //std::cout << "Nav: " << game->get_tile_at(3,7)->is_pathable() << std::endl;
-      //player->units[unitNum]->move(path[0]);
-      physThinkBlue(player->units[unitNum]);
-    }
     
+    } 
     if(player->units[unitNum]->job->title == "intern")
     {
-      snatch_blue_ore(player->units[unitNum]);
+      blue_ore_getter(player->units[unitNum]);
     }
+    if(player->units[unitNum]->job->title == "manager")
+    {
+    
+    } 
   }
   // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
   // Put your game logic here for run_turn here
@@ -176,67 +171,78 @@ std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
 //<<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // You can add additional methods here for your AI to call
 //<<-- /Creer-Merge: methods -->>
-void AI::physThinkBlue(const Unit& physicist)
+void AI::blue_ore_getter(const Unit& unit)
 {
-/*
- std::cout << "3" << std::endl;
-  //get to the nearest blue oar.
-  std::vector<Tile> shortestPath;
-  bool ignore_start = true; // since start with empty vector, don't want that to be the shortest path
-  for(unsigned i = 0; i < game->tiles.size(); i++)
+  if(unit->job->carry_limit == unit->blueium_ore)
   {
-    if (game->tiles[i]->blueium_ore > 0)
+     // if next to a refinery, drop the ore.
+    std::vector<Tile> adjacent = unit->tile->get_neighbors();
+    for(unsigned i = 0; i < adjacent.size(); i++)
     {
-      std::cout << "I probably got here!" << std::endl;
-      std::vector<Tile> adjacent = game->tiles[i]->get_neighbors();
-      for(unsigned j = 0; j < adjacent.size(); j++)
+      if(adjacent[i]->blueium_ore > 0)
       {
-        if(adjacent[j]->is_pathable())
+        unit->drop(unit->tile, unit->job->carry_limit, "blueium ore");
+      }
+    }
+    
+    //find a blue refinery
+    for(unsigned i = 0; i < game->tiles.size(); i++)
+    {
+      if(game->tiles[i]->machine != NULL && game->tiles[i]->machine->ore_type == "blueium")
+      { // walk to it
+        std::vector<Tile> path = find_path(unit->tile, game->tiles[i]);
+        if(path.size() > 0)
         {
-          shortestPath = find_path(physicist->tile, adjacent[j]);
-          break;
+          std::cout << "I start moving! Length: " << path.size() << std::endl;
+          unit->move(path[0]);
         }
+       break;
       }
     }
   }
-  std::cout << "4" << std::endl;
-  //std::cout << shortestPath[0]->x << ":" << shortestPath[0]->y << std::endl;
-  if(shortestPath.size() > 0)
-  { 
-    std::cout << "I moved!" << std::endl;
-    physicist->move(shortestPath[0]);
-  }
-*/
-
-  std::vector<Tile> path = find_path(physicist->tile, physicist->tile->tile_south->tile_east);
-  std::cout << "path_size: " << path.size() << std::endl;
-  if(path.size() > 0) 
+  else
   {
-    physicist->move(path[0]);
-  }
-}
-
-void AI::snatch_blue_ore(const Unit& unit)
-{
-  std::cout << "phy" << std::endl;
-  std::vector<Tile> path;
-  for(unsigned i = 0; i < game->tiles.size(); i++)
-  {
-    if(game->tiles[i]->blueium_ore > 0)
+    // pick up any blue ore
+    bool picked_up_ore = false;
+   
+    if(unit->tile->blueium_ore > 0)
     {
-      std::cout << "found blue at: " << game->tiles[i]->x << ", " << game->tiles[i]->y << std::endl;
-      path = find_path(unit->tile, game->get_tile_at(25,5));
-      std::cout << "path_size: " << path.size() << std::endl;
-      break;
+      std::cout << "I pick up a blue ore!" << std::endl;
+      unit->pickup(unit->tile, 1, "blueium ore");
+      std::cout << "It is in my pocket!" << std::endl;
+      picked_up_ore = true;
     }
-  }
-  if(path.size() > 0)
-  {
-    std::cout << "I'm moving to blue!" << std::endl;
-    unit->move(path[0]);
-  }
-    
-  return;
+   
+    std::vector<Tile> adjacent = unit->tile->get_neighbors();
+    for(unsigned i = 0; i < adjacent.size(); i++)
+    {
+      if(adjacent[i]->blueium_ore > 0)
+      {
+        std::cout << "I pick up a blue ore!" << std::endl;
+        unit->pickup(adjacent[i], 1, "blueium ore");
+        picked_up_ore = true;
+      }
+    }
+
+    if(!picked_up_ore)
+    {
+      std::vector<Tile> path;
+      //find some blue ore
+      for(unsigned i = 0; i < game->tiles.size(); i++)
+      {
+       if(game->tiles[i]->blueium_ore > 0)
+       {
+         path = find_path(unit->tile, game->tiles[i]);
+         break;
+       }
+      }
+      if(path.size() > 0)
+      {
+        std::cout << "I have made a move!" << std::endl;
+        unit->move(path[0]);
+      }
+    }
+  } 
 }
 
 } // newtonian

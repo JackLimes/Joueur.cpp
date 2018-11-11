@@ -83,8 +83,11 @@ public:
 /// <return>A List of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal. Or an empty list if no path found.</return>
 std::vector<Tile> find_path(const Tile& start, const Tile& goal);
 
-void physThinkBlue(const Unit& physicist);
-void snatch_blue_ore(const Unit& unit);
+void blue_ore_getter(const Unit& unit); // collect blue ore and drop them by gen
+void red_ore_getter(const Unit& unit); // collect red ore and drop them by gen
+void offensive(const Unit& unit);  // attack other unit (use static list (hit list))
+void refiners(const Unit& unit); // put ore into machine
+void attack_thots(const Unit& unit); // checks adjacent squares for valid enemies
 
 
 
